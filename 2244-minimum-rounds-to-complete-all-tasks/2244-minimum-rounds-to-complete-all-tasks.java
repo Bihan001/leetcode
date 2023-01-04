@@ -5,12 +5,11 @@ class Solution {
             map.put(difficulty, map.getOrDefault(difficulty, 0) + 1);
         }
         int ans = 0;
-        for(int difficulty : map.keySet()) {
-            int count = map.get(difficulty);
+        for(int count : map.values()) {
             if(count < 2) return -1;
-            int withTwo = count / 2;
-            int withThree = count % 3 == 0 ? count / 3 : count % 3 == 1 ? count / 3 - 1 + 2 : count % 3 == 2 ? count / 3 + 1 : Integer.MAX_VALUE;
-            ans += Math.min(withTwo, withThree);
+            if(count % 3 == 0) ans += count / 3; // Best case: Example - 15
+            if(count % 3 == 1) ans += count / 3 - 1 + 2; // Example - 16, then 16 = (3 * 5 - 3) + (2 * 2)
+            if(count % 3 == 2) ans += count / 3 + 1; // Example - 17, then 17 = (3 * 5) + 2
         }
         return ans;
     }
